@@ -1,9 +1,10 @@
 # Stage 1: Build frontend assets
-FROM node:18-alpine AS node-builder
+FROM node:18 AS node-builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN npm run build
 
 # Stage 2: Main application
