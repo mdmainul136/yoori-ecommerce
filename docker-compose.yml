@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # PHP Application (Laravel)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - APP_ENV=production
+      - DB_HOST=db
+      - DB_DATABASE=${DB_DATABASE:-yoori}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+    networks:
+      - coolify-network
+    depends_on:
+      - db
+      - redis
+
+  # Web Server (Nginx)
+  web:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - .:/var/www
+      - ./docker-nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - coolify-network
+    depends_on:
+      - app
+    # Coolify automatically handles the Load Balancer (Traefik) via its UI labels, 
+    # but we can pre-define them here.
+    labels:
+      - "coolify.managed=true"
+
+  # Database (MariaDB)
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-yoori}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - yoori-db-data:/var/lib/mysql
+    networks:
+      - coolify-network
+
+  # Cache (Redis)
+  redis:
+    image: redis:alpine
+    restart: always
+    networks:
+      - coolify-network
+
+networks:
+  coolify-network:
+    external: false
+
+volumes:
+  yoori-db-data:
+    driver: local
