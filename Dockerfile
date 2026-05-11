@@ -1,13 +1,3 @@
-# Stage 1: Build frontend assets
-FROM node:18 AS node-builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-ENV NODE_OPTIONS="--max-old-space-size=2048"
-RUN npm run build
-
-# Stage 2: Main application
 FROM php:8.2-fpm
 
 # Install system dependencies
@@ -34,18 +24,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy application files
+# Copy application files (including pre-built public/build)
 COPY . /var/www
-
-# Copy built assets from node-builder stage
-COPY --from=node-builder /app/public/build ./public/build
 
 # Install composer dependencies
 ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build
 
 USER www-data
 

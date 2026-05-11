@@ -10,7 +10,7 @@
 /storage
 /vendor
 /node_modules
-/public/build
+# /public/build (Removed to allow pre-built assets to be pushed)
 /public/build_backup
 .env
 composer.lock
