@@ -6,7 +6,6 @@ composer.lock
 Dockerfile
 Dockerfile.nginx
 docker-compose.yml
-nginx-prod.conf
 storage/*.key
 .env
 .env.example
