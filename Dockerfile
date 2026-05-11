@@ -29,7 +29,7 @@ COPY . /var/www
 
 # Install composer dependencies
 ENV COMPOSER_MEMORY_LIMIT=-1
-RUN composer install --no-interaction --optimize-autoloader --no-dev --verbose
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts --verbose
 
 # Install Node.js and build assets
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
