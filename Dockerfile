@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install PHP extensions using the official installer script (more stable)
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN install-php-extensions pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -28,7 +28,8 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install composer dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+ENV COMPOSER_MEMORY_LIMIT=-1
+RUN composer install --no-interaction --optimize-autoloader --no-dev --verbose
 
 # Install Node.js and build assets
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
