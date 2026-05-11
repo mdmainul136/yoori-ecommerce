@@ -9,6 +9,7 @@ services:
     restart: always
     environment:
       - APP_ENV=production
+      - APP_URL=https://gorolyshop.com
       - DB_HOST=db
       - DB_DATABASE=${DB_DATABASE:-yoori}
       - DB_USERNAME=${DB_USERNAME:-root}
