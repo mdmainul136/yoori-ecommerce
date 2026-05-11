@@ -29,8 +29,17 @@ WORKDIR /var/www
 # Copy existing application directory contents
 COPY . /var/www
 
+# Install composer dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Install NPM dependencies and build assets
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install \
+    && npm run build
+
 # Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Change current user to www
 USER www-data
