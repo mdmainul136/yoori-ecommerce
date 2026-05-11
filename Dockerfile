@@ -32,7 +32,9 @@ ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build
+RUN mkdir -p /var/www/storage /var/www/bootstrap/cache /var/www/public/build \
+    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 USER www-data
 
