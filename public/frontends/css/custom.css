@@ -1,0 +1,13 @@
+span.validation_error {
+    font-size: 13px;
+    color: red;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+
+h3.variations_price {
+    font-size: 18px;
+    color: var(--color-heading);
+    margin-top: 5px;
+}

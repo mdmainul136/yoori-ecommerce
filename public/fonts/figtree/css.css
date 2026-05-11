@@ -1,0 +1,55 @@
+/* Figtree Light (300) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300;
+  src: url('Figtree-Light.ttf') format('truetype');
+}
+
+/* Figtree Regular (400) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400;
+  src: url('Figtree-Regular.ttf') format('truetype');
+}
+
+/* Figtree Medium (500) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 500;
+  src: url('Figtree-Medium.ttf') format('truetype');
+}
+
+/* Figtree SemiBold (600) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 600;
+  src: url('Figtree-SemiBold.ttf') format('truetype');
+}
+
+/* Figtree Bold (700) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 700;
+  src: url('Figtree-Bold.ttf') format('truetype');
+}
+
+/* Figtree ExtraBold (800) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 800;
+  src: url('Figtree-ExtraBold.ttf') format('truetype');
+}
+
+/* Figtree Black (900) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 900;
+  src: url('Figtree-Black.ttf') format('truetype');
+}

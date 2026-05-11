@@ -1,0 +1,150 @@
+/*********************************
+/*  RTl Design Start
+*********************************/
+
+/* Toolbar Design */
+[dir="rtl"] .template__toolbar .toolbar__related {
+    text-align: right;
+}
+
+.search-form .input-group .form-control {
+    padding: 13px 24px;
+    padding-left: 30px;
+}
+[dir="rtl"] .search-form .input-group button {
+    right: auto;
+    left: 12px;
+}
+
+/* Header Start */
+
+[dir="rtl"] .category-item .category-list li a.nav-link::after {
+    right: auto;
+    left: 10px;
+    -webkit-transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
+}
+
+[dir="rtl"] .category-item .category-list .mega-menu {
+    left: auto;
+    right: 102%;
+}
+
+[dir="rtl"] .category-item .category-list li:hover:hover .mega-menu {
+    left: auto;
+    right: 100%;
+}
+
+/* Banner Section */
+[dir="rtl"] .banner-wrapper {
+    margin-left: initial;
+    margin-right: auto;
+}
+
+[dir="rtl"] .banner-wrapper .swiper-pagination {
+    left: auto !important;
+    right: 35px;
+    width: auto;
+}
+
+[dir="rtl"] .hero-text .hero-content {
+    text-align: right;
+    margin-left: auto;
+}
+
+[dir="rtl"] .swiper-slide .blogPost-item .blog-content {
+    text-align: right;
+    padding-top: 28px;
+}
+
+[dir="rtl"] .tabs-filter .nav-link:last-of-type::after {
+    display: block;
+}
+[dir="rtl"] .tabs-filter .nav-link:first-of-type::after {
+    display: none;
+}
+
+[dir="rtl"] .footer-widget .widget-list li a::before {
+    left: auto;
+    right: -18px;
+}
+[dir="rtl"] .footer-widget .widget-list li a::after {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .footer-widget .widget-list li a:hover::after {
+    right: 0;
+    left: auto;
+}
+
+[dir="rtl"] .PopupModal .modal-header {
+    right: auto;
+    left: 17px;
+}
+
+[dir="rtl"] .productThumb-wrapper .countdown {
+    left: auto;
+    right: 155px;
+}
+
+@media screen and (max-width: 1199px) {
+    .productThumb-wrapper .countdown {
+        left: auto;
+        right: 20px;
+    }
+}
+[dir="rtl"] .countdown .time-box:first-of-type::after {
+    display: none;
+}
+[dir="rtl"] .countdown .time-box:last-of-type::after {
+    display: block;
+}
+[dir="rtl"] .product-attr-color li .box.selected:after {
+    left: auto;
+    right: 7px;
+}
+
+[dir="rtl"]
+    .breadcrumb-section
+    .breadcrumb-area
+    .list
+    li:not(:last-child)::after {
+    left: -15px;
+    right: auto;
+}
+
+[dir="rtl"] .allCategories-item .allCategories-list .global-list li {
+    padding-right: 12px;
+    padding-left: 0;
+}
+[dir="rtl"] .allCategories-item .allCategories-list .global-list li::after {
+    left: auto;
+    right: -6px;
+    transform: rotate(180deg);
+}
+
+[dir="rtl"] .swiper-slide .productItem .product-content {
+    text-align: right;
+}
+
+[dir="rtl"] input.number {
+    text-align: right;
+}
+[dir="rtl"] .swiper-slide .productItem .product-content .price {
+    display: inline-flex;
+}
+
+[dir="rtl"] .customCheckbox input:checked + label::after {
+    right: 5px;
+}
+/* [dir="rtl"] .swiper-slide .categoriesItem,
+[dir="rtl"] .swiper-slide .categoriesItem .show-btn,
+[dir="rtl"] .swiper-slide .categoriesItem .categories-inner {
+  text-align: right;
+} */
+/* Product Card */
+
+/*********************************
+/*  RTl Design End
+*********************************/
