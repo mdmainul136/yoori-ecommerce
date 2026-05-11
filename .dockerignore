@@ -1,0 +1,17 @@
+.git
+.github
+node_modules
+npm-debug.log
+composer.lock
+Dockerfile
+Dockerfile.nginx
+docker-compose.yml
+nginx-prod.conf
+storage/*.key
+.env
+.env.example
+.gitignore
+.editorconfig
+.styleci.yml
+README.md
+tests
