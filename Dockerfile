@@ -1,3 +1,12 @@
+# Stage 1: Build frontend assets
+FROM node:18-alpine AS node-builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Stage 2: Main application
 FROM php:8.2-fpm
 
 # Install system dependencies
@@ -14,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions using the official installer script (more stable)
+# Install PHP extensions using the official installer script
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
@@ -27,15 +36,12 @@ WORKDIR /var/www
 # Copy application files
 COPY . /var/www
 
+# Copy built assets from node-builder stage
+COPY --from=node-builder /app/public/build ./public/build
+
 # Install composer dependencies
 ENV COMPOSER_MEMORY_LIMIT=-1
-RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts --verbose
-
-# Install Node.js and build assets
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install \
-    && npm run build
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
