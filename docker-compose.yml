@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Traefik Load Balancer & SSL Provider
   traefik:
-    image: traefik:v3.3
+    image: traefik:v3.6.1
     user: root
     restart: always
     command:
@@ -26,6 +26,8 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DOCKER_API_VERSION=1.44
     networks:
       - yoori-network
 
