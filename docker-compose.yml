@@ -3,12 +3,13 @@ version: '3.8'
 services:
   # Traefik Load Balancer & SSL Provider
   traefik:
-    image: traefik:v2.10
+    image: traefik:v3.0
     restart: always
     command:
       - "--api.insecure=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
@@ -22,7 +23,7 @@ services:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - DOCKER_API_VERSION=1.41
+      - DOCKER_API_VERSION=1.40
     networks:
       - yoori-network
 
