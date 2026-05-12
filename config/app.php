@@ -1,7 +1,7 @@
 <?php
 
 /* ================================ OLD CODE ================================ */
-$url = env('APP_URL') ?: (isset($_SERVER) ? $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : '');
+$url = env('APP_URL') ?: (isset($_SERVER['REQUEST_SCHEME'], $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : 'http://localhost');
 
 $url = parse_url($url);
 $path = '/';
