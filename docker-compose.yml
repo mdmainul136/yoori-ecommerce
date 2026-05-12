@@ -61,7 +61,7 @@ services:
       - db
       - redis
 
-  # Web Server (Nginx)
+  # Web Server (Nginx) - Port mapping removed to avoid conflict with Traefik
   web:
     build:
       context: .
@@ -73,8 +73,8 @@ services:
       - "traefik.http.routers.yoori.entrypoints=websecure"
       - "traefik.http.routers.yoori.tls.certresolver=myresolver"
       - "traefik.http.services.yoori.loadbalancer.server.port=80"
-      # Redirect HTTP to HTTPS
-      - "traefik.http.routers.yoori-http.rule=Host(`gorolyshop.com`) || Host(`www.gorolyshop.com`)"
+      # Redirect HTTP to HTTPS for all hosts
+      - "traefik.http.routers.yoori-http.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.yoori-http.entrypoints=web"
       - "traefik.http.routers.yoori-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
