@@ -3,13 +3,14 @@ version: '3.8'
 services:
   # Traefik Load Balancer & SSL Provider
   traefik:
-    image: traefik:v3.0
+    image: traefik:latest
     restart: always
     command:
       - "--api.insecure=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      # Adding a constraint or ensuring version is handled
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
@@ -23,7 +24,8 @@ services:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - DOCKER_API_VERSION=1.40
+      - DOCKER_API_VERSION=1.41
+      - COMPOSE_API_VERSION=1.41
     networks:
       - yoori-network
 
@@ -64,7 +66,7 @@ services:
       - db
       - redis
 
-  # Web Server (Nginx) - Port mapping removed to avoid conflict with Traefik
+  # Web Server (Nginx)
   web:
     build:
       context: .
@@ -76,7 +78,7 @@ services:
       - "traefik.http.routers.yoori.entrypoints=websecure"
       - "traefik.http.routers.yoori.tls.certresolver=myresolver"
       - "traefik.http.services.yoori.loadbalancer.server.port=80"
-      # Redirect HTTP to HTTPS for all hosts
+      # Redirect HTTP to HTTPS
       - "traefik.http.routers.yoori-http.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.yoori-http.entrypoints=web"
       - "traefik.http.routers.yoori-http.middlewares=redirect-to-https"
