@@ -69,7 +69,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.yoori.rule=Host(`gorolyshop.com`) || Host(`www.gorolyshop.com`)"
+      - "traefik.http.routers.yoori.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.yoori.entrypoints=websecure"
       - "traefik.http.routers.yoori.tls.certresolver=myresolver"
       - "traefik.http.services.yoori.loadbalancer.server.port=80"
