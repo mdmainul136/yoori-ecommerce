@@ -7,7 +7,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN apt-get update && apt-get install -y \
     git curl libpng-dev libonig-dev libxml2-dev zip unzip libzip-dev libjpeg-dev libfreetype6-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    && install-php-extensions pdo_mysql mbstring exif pcntl bcmath gd zip intl
+    && install-php-extensions pdo_mysql mysqli mbstring exif pcntl bcmath gd zip intl
 
 WORKDIR /var/www
 COPY . /var/www
@@ -20,8 +20,9 @@ RUN mkdir -p storage/framework/cache/data \
     && mkdir -p storage/logs \
     && mkdir -p bootstrap/cache \
     && mkdir -p public/build \
-    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+    && touch .env \
+    && chown -R www-data:www-data /var/www \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public /var/www/.env
 
 # Install dependencies
 ENV COMPOSER_MEMORY_LIMIT=-1
