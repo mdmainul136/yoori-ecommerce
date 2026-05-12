@@ -16,10 +16,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_HOST=redis
     networks:
-      - coolify-network
-    depends_on:
-      - db
-      - redis
+      - yoori-network
 
   # Web Server (Nginx)
   web:
@@ -27,14 +24,12 @@ services:
       context: .
       dockerfile: Dockerfile.nginx
     restart: always
+    ports:
+      - "80:80"
     networks:
-      - coolify-network
+      - yoori-network
     depends_on:
       - app
-    # Coolify automatically handles the Load Balancer (Traefik) via its UI labels, 
-    # but we can pre-define them here.
-    labels:
-      - "coolify.managed=true"
 
   # Database (MariaDB)
   db:
@@ -44,21 +39,20 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE:-yoori}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     volumes:
-      - yoori-db-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     networks:
-      - coolify-network
+      - yoori-network
 
-  # Cache (Redis)
+  # Redis
   redis:
     image: redis:alpine
     restart: always
     networks:
-      - coolify-network
+      - yoori-network
 
 networks:
-  coolify-network:
-    external: false
+  yoori-network:
+    driver: bridge
 
 volumes:
-  yoori-db-data:
-    driver: local
+  db-data:
