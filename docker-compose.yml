@@ -3,14 +3,13 @@ version: '3.8'
 services:
   # Traefik Load Balancer & SSL Provider
   traefik:
-    image: traefik:latest
+    image: traefik:v3.0
     restart: always
     command:
       - "--api.insecure=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
-      # Adding a constraint or ensuring version is handled
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
@@ -24,8 +23,7 @@ services:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - DOCKER_API_VERSION=1.41
-      - COMPOSE_API_VERSION=1.41
+      - DOCKER_API_VERSION=1.40
     networks:
       - yoori-network
 
@@ -74,15 +72,20 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.yoori.rule=HostRegexp(`{host:.+}`)"
+      # HTTPS router
+      - "traefik.http.routers.yoori.rule=Host(`gorolyshop.com`) || Host(`www.gorolyshop.com`)"
       - "traefik.http.routers.yoori.entrypoints=websecure"
+      - "traefik.http.routers.yoori.tls=true"
       - "traefik.http.routers.yoori.tls.certresolver=myresolver"
+      - "traefik.http.routers.yoori.tls.domains[0].main=gorolyshop.com"
+      - "traefik.http.routers.yoori.tls.domains[0].sans=www.gorolyshop.com"
       - "traefik.http.services.yoori.loadbalancer.server.port=80"
-      # Redirect HTTP to HTTPS
-      - "traefik.http.routers.yoori-http.rule=HostRegexp(`{host:.+}`)"
+      # HTTP router → redirect to HTTPS
+      - "traefik.http.routers.yoori-http.rule=Host(`gorolyshop.com`) || Host(`www.gorolyshop.com`)"
       - "traefik.http.routers.yoori-http.entrypoints=web"
       - "traefik.http.routers.yoori-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
     networks:
       - yoori-network
     depends_on:
