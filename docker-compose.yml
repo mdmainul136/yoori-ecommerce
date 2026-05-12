@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Traefik Load Balancer & SSL Provider
   traefik:
-    image: traefik:v3.0
+    image: traefik:v3.3
     restart: always
     command:
       - "--api.insecure=false"
@@ -22,8 +22,6 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - DOCKER_API_VERSION=1.40
     networks:
       - yoori-network
 
